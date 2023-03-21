@@ -16,10 +16,15 @@ This script loads CSV files into Snowflake tables. For each CSV file in a specif
 3. Create a `.env` file in the project directory with the following variables:
 
 account="your-snowflake-account"
+
 user="your-snowflake-user"
+
 password="your-snowflake-password"
+
 database="your-snowflake-database"
+
 schema="your-snowflake-schema"
+
 role="your-snowflake-role"
 
 

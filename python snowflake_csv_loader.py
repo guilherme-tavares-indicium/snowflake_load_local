@@ -19,9 +19,10 @@ def get_files(path):
     file_paths = {}
     for dirpath, _, filenames in os.walk(path):
         for filename in filenames:
-            filepath = os.path.join(dirpath, filename)
-            file_name = os.path.splitext(filename)[0]
-            file_paths[filepath] = file_name
+            if filename.endswith('.csv'):
+                filepath = os.path.join(dirpath, filename)
+                file_name = os.path.splitext(filename)[0]
+                file_paths[filepath] = file_name
     return file_paths
 
 def get_directory_files(directory):
