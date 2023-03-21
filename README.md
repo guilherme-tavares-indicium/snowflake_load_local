@@ -13,27 +13,20 @@ This script loads CSV files into Snowflake tables. For each CSV file in a specif
 
 1. Clone the repository and navigate to the project directory.
 2. Install the required libraries by running `pip install -r requirements.txt`.
-3. Create a `.env` file in the project directory with the following variables:
-
-account="your-snowflake-account"
-
-user="your-snowflake-user"
-
-password="your-snowflake-password"
-
-database="your-snowflake-database"
-
-schema="your-snowflake-schema"
-
-role="your-snowflake-role"
+3. Create a `.env` file in the project directory, containing the following variables:
+    - `account`: the name of the Snowflake account to connect to
+    - `user`: the username to use for authentication
+    - `password`: the password to use for authentication
+    - `database`: the name of the database to create tables in
+    - `schema`: the name of the schema to create tables in
+    - `role`: the name of the role to use for authentication
 
 
 4. Replace the values in angle brackets with your Snowflake account details. There is no need to worry about loading environment variables, since this project uses the dotenv library to automate that.
 
 ## Usage
 
-1. Place the CSV files to be loaded in a directory.
-2. Edit the `directory` variable in the script to point to the directory containing the CSV files.
-3. Run the script using `python snowflake_csv_loader.py`.
+1. Set the `directory` variable in the `main` function to the path of the directory that contains the csv files to be loaded.
+2. Run the script using `python main.py` to create tables for each CSV file in the Snowflake database and load the data into the corresponding tables, named after the csv file name.
 
 The script will load each CSV file into a corresponding table in Snowflake. If a table with the same name already exists, the script will load the data into the existing table (append data).
