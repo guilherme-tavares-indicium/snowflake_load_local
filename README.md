@@ -30,3 +30,7 @@ This script loads CSV files into Snowflake tables. For each CSV file in a specif
 2. Run the script using `python main.py` to create tables for each CSV file in the Snowflake database and load the data into the corresponding tables, named after the csv file name.
 
 The script will load each CSV file into a corresponding table in Snowflake. If a table with the same name already exists, the script will load the data into the existing table (append data).
+
+ You can also specify the delimiter to be used for parsing the CSV files by passing it as an optional argument when instantiating the DataLoader object. If you don't specify a delimiter, it will default to ,. For example, to use a tab delimiter, you can do:
+
+`loader = DataLoader(directory='path/to/files', delimiter='\t')`

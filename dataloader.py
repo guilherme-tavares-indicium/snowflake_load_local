@@ -5,8 +5,9 @@ import os
 from dotenv import dotenv_values
 
 class DataLoader:
-    def __init__(self, directory, config_file='.env'):
+    def __init__(self, directory, config_file='.env', delimiter=','):
         self.directory = directory
+        self.delimiter = delimiter
         self.file_paths = self._get_file_paths()
         self.config = dotenv_values(config_file)
         self.connection = snowflake.connector.connect(
@@ -41,7 +42,7 @@ class DataLoader:
                 # print(schema)
                 self.cur.execute(f"CREATE TABLE {file_name} ({schema})")
             # Load data into table
-            df = pd.read_csv(filepath)
+            df = pd.read_csv(filepath, delimiter=self.delimiter)
             pt.write_pandas(conn=self.connection, df=df, table_name=file_name, quote_identifiers=False)
             print(f"{filepath} loaded successfully")
 
