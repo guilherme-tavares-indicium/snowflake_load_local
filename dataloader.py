@@ -21,16 +21,26 @@ class DataLoader:
 
     def _get_files(self, path):
         file_paths = {}
+
+        # Check files in subdirectories 
         for dirpath, _, filenames in os.walk(path):
             for filename in filenames:
                 if filename.endswith('.csv'):
                     filepath = os.path.join(dirpath, filename)
                     file_name = os.path.splitext(filename)[0]
                     file_paths[filepath] = file_name
+
+        # Check files in the base directory
+        for filename in os.listdir(path):
+            if filename.endswith('.csv'):
+                filepath = os.path.join(path, filename)
+                file_name = os.path.splitext(filename)[0]
+                file_paths[filepath] = file_name
         return file_paths
 
     def _get_directory_files(self):
         file_paths = {}
+        file_paths.update(self._get_files(self.directory))
         for root, dirs, _ in os.walk(self.directory):
             for dir in dirs:
                 path = os.path.join(root, dir)
