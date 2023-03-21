@@ -71,7 +71,7 @@ for filepath, file_name in file_paths.items():
         # If table does not exist, create it using the schema inferred from the pandas DataFrame
         df = pd.read_csv(filepath)
         schema = ', '.join([f'{col} STRING' for col in df.columns])
-        print(schema)
+        # print(schema)
         cur.execute(f"CREATE TABLE {file_name} ({schema})")
     # Load data into table
     df = pd.read_csv(filepath)
