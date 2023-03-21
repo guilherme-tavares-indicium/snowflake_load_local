@@ -7,7 +7,7 @@ from dotenv import dotenv_values
 class DataLoader:
     def __init__(self, directory, config_file='.env'):
         self.directory = directory
-        self.file_paths = self._get_directory_files()
+        self.file_paths = self._get_file_paths()
         self.config = dotenv_values(config_file)
         self.connection = snowflake.connector.connect(
             account=self.config["account"],
@@ -19,32 +19,14 @@ class DataLoader:
         )
         self.cur = self.connection.cursor()
 
-    def _get_files(self, path):
+    def _get_file_paths(self):
         file_paths = {}
-
-        # Check files in subdirectories 
-        for dirpath, _, filenames in os.walk(path):
-            for filename in filenames:
-                if filename.endswith('.csv'):
-                    filepath = os.path.join(dirpath, filename)
-                    file_name = os.path.splitext(filename)[0]
-                    file_paths[filepath] = file_name
-
-        # Check files in the base directory
-        for filename in os.listdir(path):
-            if filename.endswith('.csv'):
-                filepath = os.path.join(path, filename)
-                file_name = os.path.splitext(filename)[0]
-                file_paths[filepath] = file_name
-        return file_paths
-
-    def _get_directory_files(self):
-        file_paths = {}
-        file_paths.update(self._get_files(self.directory))
-        for root, dirs, _ in os.walk(self.directory):
-            for dir in dirs:
-                path = os.path.join(root, dir)
-                file_paths.update(self._get_files(path))
+        for root, _, files in os.walk(self.directory):
+            for file in files:
+                if file.endswith('.csv'):
+                    file_path = os.path.join(root, file)
+                    file_name = os.path.splitext(file)[0]
+                    file_paths[file_path] = file_name
         return file_paths
 
     def load_data(self):
